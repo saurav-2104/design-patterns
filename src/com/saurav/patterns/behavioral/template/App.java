@@ -10,15 +10,10 @@ import java.util.logging.Logger;
  * Based on Inversion of Control aka Hollywood's Principle
  */
 
-class Burger {
-    private static String type;
+abstract class Burger {
     private static final Logger LOGGER = Logger.getLogger(Burger.class.getName());
 
-    public Burger(String type) {
-        this.type = type;
-    }
-
-    public void makeBurger() {
+    final void makeBurger() {
         bakeBuns();
         putPatty();
         insertToppings();
@@ -28,24 +23,36 @@ class Burger {
         LOGGER.info("Buns baked !!");
     }
 
-    private void putPatty() {
-        if (type.equals("Veg")) {
-            LOGGER.info("Aloo Patty inserted");
-        } else if (type.equals("NonVeg")) {
-            LOGGER.info("Chicken Patty inserted");
-        }
-    }
+    abstract void putPatty();
 
     private void insertToppings() {
         LOGGER.info("Onion and tomatoes have been inserted");
     }
 }
 
+class VegBurger extends Burger {
+    private static final Logger LOGGER = Logger.getLogger(VegBurger.class.getName());
+
+    @Override
+    void putPatty() {
+        LOGGER.info("Aloo patty inserted");
+    }
+}
+
+class NonVegBurger extends Burger {
+    private static final Logger LOGGER = Logger.getLogger(NonVegBurger.class.getName());
+
+    @Override
+    void putPatty() {
+        LOGGER.info("Chicken patty inserted");
+    }
+}
+
 public class App {
     public static void main(String[] args) {
-        Burger vegBurger = new Burger("Veg");
+        Burger vegBurger = new VegBurger();
         vegBurger.makeBurger();
-        Burger nonVegBurger = new Burger("NonVeg");
+        Burger nonVegBurger = new NonVegBurger();
         nonVegBurger.makeBurger();
     }
 }

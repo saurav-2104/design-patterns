@@ -39,11 +39,13 @@ class RubberDuck extends Duck {
         System.out.println("Rubber Duck on the display");
     }
 
+    @Override
     void quack() {
         // How can a rubber duck quack ? It should "squeak"
         System.out.println("Squeak Squeak !");
     }
 
+    @Override
     void fly() {
         // Rubber ducks cannot fly !
     }
